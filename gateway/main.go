@@ -21,7 +21,7 @@ func serveSwagger(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	p := strings.TrimPrefix(r.URL.Path, "/swagger/")
-	p = path.Join("hello", p)
+	p = path.Join("echo", p)
 	http.ServeFile(w, r, p)
 }
 func run() error {
