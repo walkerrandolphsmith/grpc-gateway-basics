@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-
+	"google.golang.org/grpc/reflection"
 	"golang.org/x/net/context"
 
 	pb "github.com/walkerrandolphsmith/grpc-gateway-basics/echo"
@@ -35,6 +35,7 @@ func main() {
 	}
 	grpcServer := grpc.NewServer()
 	pb.RegisterEchoServer(grpcServer, &server{})
+	reflection.Register(grpcServer)
 	log.Println("listening to port *:9090")
 	grpcServer.Serve(lis)
 }
