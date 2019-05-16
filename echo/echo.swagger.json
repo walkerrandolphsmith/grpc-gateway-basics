@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "echo.proto",
+    "title": "echo/echo.proto",
     "version": "version not set"
   },
   "schemes": [
