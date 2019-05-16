@@ -1,12 +1,12 @@
-path_to_service_proto=echo/echo.proto
+path_to_service_proto=echo.proto
 output_dir=.
 
 function build_grpc() {
   protoc -I/usr/local/include -I. \
-  -I$GOPATH/src \
-  -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-  --go_out=plugins=grpc:$output_dir \
-  $path_to_service_proto
+    -I$GOPATH/src \
+    -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+    --go_out=plugins=grpc:$output_dir \
+    $path_to_service_proto
 }
 
 function build_reverse_proxy() {
@@ -25,7 +25,17 @@ function build_swagger() {
     $path_to_service_proto
 }
 
+function build_docs() {
+  protoc -I/usr/local/include -I. \
+    -I$GOPATH/src \
+    -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+    --doc_out=$output_dir \
+    --doc_opt=html,index.html \
+    $path_to_service_proto
+}
+
 function build() {
+  cd ./echo
   if [ $# -eq 0 ]
   then
     build_grpc
@@ -40,21 +50,16 @@ function build() {
   elif [ $1 == "swagger" ]
   then
     build_swagger
+  elif [ $1 == "docs" ]
+  then
+    build_docs
   fi
-}
-
-function test() {
-  curl -X POST -k http://localhost:8080/v1/echo \
-    -H "Content-Type: text/plain" \
-    -d '{"value": "foo"}'
+  cd ../
 }
 
 command=$1
 
 case $command in
-  test)
-    test $2
-    ;;
   build)
     build $2
     ;;
@@ -62,3 +67,4 @@ case $command in
     echo "Command not found"
     ;;
 esac
+

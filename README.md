@@ -19,7 +19,9 @@ go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 go get -u github.com/golang/protobuf/protoc-gen-go
 
-# generate reverse-proxy and swagger config
+# generate gateway reverse-proxy
+# generate swagger description
+# generate proto docs
 chmod +x ./ctl.sh
 ./ctl.sh build
 ```
@@ -31,5 +33,10 @@ go run server/main.go
 go run gateway/main.go
 
 # curl to verify you can communicate with the REST gateway
-./ctl.sh test
+curl -X POST -k http://localhost:8080/v1/echo \
+  -H "Content-Type: text/plain" \
+  -d '{"value": "foo"}'
+
+# retrieve the swagger description
+curl localhost:8080/swagger/echo.swagger.json
 ```

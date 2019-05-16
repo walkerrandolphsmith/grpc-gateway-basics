@@ -1,0 +1,4 @@
+echo/echo.pb.go
+echo/echo.pb.gw.go
+echo/index.html
+echo/swagger.json
