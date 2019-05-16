@@ -19,11 +19,8 @@ go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 go get -u github.com/golang/protobuf/protoc-gen-go
 
-# generate gateway reverse-proxy
-# generate swagger description
-# generate proto docs
-chmod +x ./ctl.sh
-./ctl.sh build
+# generate APIs and 
+make
 ```
 
 ## Run
